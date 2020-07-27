@@ -1,0 +1,18 @@
+dependencies {
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.6.2'
+}
+
+jar {
+    archivesBaseName = "$project.name-all"
+    manifest {
+        attributes 'Implementation-Title': 'ProjectJUnit',
+                'Implementation-Version': project.version,
+                'Created-By': 'Luk Koloski',
+                'Main-Class': 'org.project.Main'
+    }
+}
+
+task runJUnit(type: JavaExec) {
+    classpath = sourceSets.main.runtimeClasspath
+    main = 'org.project.Main'
+}

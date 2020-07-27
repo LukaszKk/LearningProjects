@@ -1,0 +1,51 @@
+buildscript {
+    repositories {
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
+    }
+
+    dependencies {
+        classpath "gradle.plugin.com.github.spotbugs.snom:spotbugs-gradle-plugin:4.4.3"
+    }
+}
+
+plugins {
+    id 'java'
+}
+
+subprojects {
+    group = 'org.project'
+    version = '1.0'
+
+    repositories {
+        mavenCentral()
+    }
+
+    apply plugin: 'java'
+    apply plugin: 'com.github.spotbugs'
+    apply plugin: 'pmd'
+
+    sourceCompatibility = 1.11
+    targetCompatibility = 1.11
+
+    // TODO: Add ruleSets to pmd
+    pmd {
+        consoleOutput = true
+        toolVersion = "6.21.0"
+        rulePriority = 5
+        ruleSets = ["category/java/errorprone.xml", "category/java/bestpractices.xml"]
+    }
+
+    // TODO: Configure spotbugs
+}
+
+wrapper {
+    gradleVersion = 6.5
+}
+
+task run() {
+    dependsOn ':ProjectJUnit:runJUnit'
+    dependsOn ':ProjectSpring:runSpring'
+}
+
