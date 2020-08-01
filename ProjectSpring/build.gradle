@@ -1,6 +1,11 @@
+ext {
+    springVersion = "5.2.8.RELEASE"
+}
+
 dependencies {
-    implementation project(':ProjectJUnit')
-    implementation 'org.springframework:spring-core:5.2.8.RELEASE'
+    implementation "org.springframework:spring-core:${springVersion}"
+    implementation "org.springframework:spring-beans:${springVersion}"
+    implementation "org.springframework:spring-context:${springVersion}"
 }
 
 jar {
