@@ -6,6 +6,6 @@
 </head>
 <body>
     <h2>Spring MVC - Home Page</h2>
-    <a href="formPage">Show form</a>
+    <a href="hello/formPage">Show form</a>
 </body>
 </html>
