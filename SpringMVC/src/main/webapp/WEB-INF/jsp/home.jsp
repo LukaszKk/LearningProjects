@@ -5,11 +5,7 @@
     <title>Spring MVC</title>
 </head>
 <body>
-
-<h2>Spring MVC - Hello world</h2>
-
-Student name: ${param.studentName}
-
+    <h2>Spring MVC - Home Page</h2>
+    <a href="formPage">Show form</a>
 </body>
-
 </html>

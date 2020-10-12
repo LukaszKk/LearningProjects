@@ -14,8 +14,8 @@ dependencies {
     implementation "org.springframework:spring-webmvc:${springVersion}"
     implementation "javax.servlet:javax.servlet-api:4.0.1"
     implementation "org.springframework.boot:spring-boot-starter-web:${springBootVersion}"
-    implementation "org.springframework.boot:spring-boot-starter-thymeleaf:${springBootVersion}"
     implementation "org.springframework.boot:spring-boot-starter-tomcat:${springBootVersion}"
+    implementation "org.apache.tomcat.embed:tomcat-embed-jasper:9.0.37"
 }
 
 jar {
