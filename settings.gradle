@@ -1,6 +1,7 @@
 include 'ProjectJUnit'
 include 'ProjectSpring'
 include 'SpringMVC'
+include 'SpringMVCBasics'
 
 rootProject.name = 'LearningProjects'
 
