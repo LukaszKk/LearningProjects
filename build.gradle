@@ -26,14 +26,13 @@ subprojects {
     apply plugin: 'com.github.spotbugs'
     apply plugin: 'pmd'
 
-    sourceCompatibility = 1.11
-    targetCompatibility = 1.11
+    sourceCompatibility = 1.16
+    targetCompatibility = 1.16
 
     // TODO: Add ruleSets to pmd
     pmd {
         consoleOutput = true
         toolVersion = "6.21.0"
-        rulePriority = 5
         ruleSets = ["category/java/errorprone.xml", "category/java/bestpractices.xml"]
     }
 
@@ -41,7 +40,7 @@ subprojects {
 }
 
 wrapper {
-    gradleVersion = 6.5
+    gradleVersion = 7.1
 }
 
 task run() {

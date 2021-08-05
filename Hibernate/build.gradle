@@ -1,0 +1,38 @@
+plugins {
+    id 'org.springframework.boot' version '2.4.2'
+    id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.hibernate.orm:hibernate-core:6.0.0.Alpha8'
+    implementation 'mysql:mysql-connector-java:8.0.26'
+
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
+
+test {
+    useJUnitPlatform()
+}
+
+task runHibernate(type: JavaExec) {
+    classpath = sourceSets.main.runtimeClasspath
+    mainClass = 'org.project.Main'
+}
+
+jar {
+    archivesBaseName = "$project.name-all"
+    manifest {
+        attributes 'Implementation-Title': 'Hibernate',
+                'Implementation-Version': project.version,
+                'Created-By': 'Aku',
+                'Main-Class': 'org.project.Main'
+    }
+}
