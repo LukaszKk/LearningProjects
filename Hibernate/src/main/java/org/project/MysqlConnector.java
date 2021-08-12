@@ -41,14 +41,15 @@ public class MysqlConnector {
     private static Configuration configure() {
         var properties = new Properties();
         properties.setProperty("hibernate.connection.url", "jdbc:mysql://localhost:3306/" + DB_NAME);
-        properties.setProperty("dialect", "org.hibernate.dialect.MysqlDialect");
+        properties.setProperty("dialect", "org.hibernate.dialect.MySQLDialect");
         properties.setProperty("hibernate.connection.username", "root");
         properties.setProperty("hibernate.connection.password", "root");
         properties.setProperty("hibernate.current_session_context_class",
                 "org.hibernate.context.internal.ThreadLocalSessionContext");
+        properties.setProperty("hibernate.hbm2ddl.auto", "update");
 
         var configuration = new Configuration().addProperties(properties);
-        configuration.addClass(Student.class);
+        configuration.addAnnotatedClass(Student.class);
 
         return configuration;
     }
