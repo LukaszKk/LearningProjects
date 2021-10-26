@@ -10,23 +10,27 @@ import org.project.beans.Student;
 
 import java.util.Properties;
 
-public class MysqlConnector {
+public class MysqlConnector implements AutoCloseable {
 
-    private static final MysqlDataSource dataSource;
     private static final String DB_USER = "root";
     private static final String DB_PASSWORD = "root";
     private static final String DB_NAME = "myhibernate";
     private static SessionFactory sessionFactory;
     private static Session session;
+    private final MysqlDataSource dataSource;
 
-    static {
+    private MysqlConnector() {
         dataSource = new MysqlDataSource();
         dataSource.setUser(DB_USER);
         dataSource.setPassword(DB_PASSWORD);
         dataSource.setDatabaseName(DB_NAME);
     }
 
-    public static Session open() {
+    public static MysqlConnector open() {
+        return new MysqlConnector();
+    }
+
+    public Session session() {
         if (session == null || !session.isOpen()) {
             var configuration = configure();
             sessionFactory = configuration.buildSessionFactory(new StandardServiceRegistryBuilder()
@@ -54,8 +58,8 @@ public class MysqlConnector {
         return configuration;
     }
 
-
-    public static void close() {
+    @Override
+    public void close() {
         if (session.isOpen()) {
             session.close();
             sessionFactory.close();
