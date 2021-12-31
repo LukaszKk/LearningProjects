@@ -1,10 +1,13 @@
 package org.project;
 
+import org.apache.logging.log4j.core.config.plugins.util.PluginManager;
 import org.project.beans.Student;
 
 public class Main {
 
     public static void main(String[] args) {
+        PluginManager.addPackage("org.project");
+
         var student = new Student("John");
         DB.saveObject(student);
 

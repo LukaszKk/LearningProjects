@@ -1,6 +1,7 @@
 .idea
 .gradle
 **/build
+**/logs
 
 # Avoid ignoring Gradle wrapper jar file
 !gradle-wrapper.jar
