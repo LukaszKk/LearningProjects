@@ -26,8 +26,8 @@ subprojects {
     apply plugin: 'com.github.spotbugs'
     apply plugin: 'pmd'
 
-    sourceCompatibility = 1.16
-    targetCompatibility = 1.16
+    sourceCompatibility = 1.17
+    targetCompatibility = 1.17
 
     // TODO: Add ruleSets to pmd
     pmd {
