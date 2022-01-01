@@ -1,13 +1,11 @@
 package org.project;
 
 import org.apache.logging.log4j.core.config.plugins.util.PluginManager;
-import org.hibernate.Hibernate;
 import org.project.beans.Course;
 import org.project.beans.Instructor;
 import org.project.beans.InstructorDetails;
+import org.project.beans.Review;
 import org.project.beans.Student;
-
-import javax.management.Query;
 
 public class Main {
 
@@ -61,6 +59,16 @@ public class Main {
         readInstructor = DB.readObject(instructor.getId(), Instructor.class);
         System.out.println(readInstructor.getCourses());
 
-        //
+        // OneToMany unidirectional
+        System.out.println("\n Unidirectional");
+        var course3 = new Course("Course 3");
+        course3.add(new Review("nice"));
+        course3.add(new Review("crap"));
+        DB.saveObject(course3);
+
+        var readCourse3 = DB.readObject(course3.getId(), Course.class);
+        System.out.println(readCourse3.getReviews());
+
+        DB.removeObject(readCourse3);
     }
 }

@@ -12,6 +12,7 @@ import org.hibernate.cfg.Environment;
 import org.project.beans.Course;
 import org.project.beans.Instructor;
 import org.project.beans.InstructorDetails;
+import org.project.beans.Review;
 import org.project.beans.Student;
 
 import javax.crypto.Cipher;
@@ -62,6 +63,8 @@ public class MysqlConnector implements AutoCloseable {
         properties.setProperty("hibernate.current_session_context_class",
                 "org.hibernate.context.internal.ThreadLocalSessionContext");
         properties.setProperty("hibernate.hbm2ddl.auto", "update");
+        // drop db on startup
+        // properties.setProperty("hibernate.hbm2ddl.auto", "create-drop");
 
         var configuration = new Configuration().addProperties(properties);
         mapClasses(configuration);
@@ -74,6 +77,7 @@ public class MysqlConnector implements AutoCloseable {
         configuration.addAnnotatedClass(Instructor.class);
         configuration.addAnnotatedClass(InstructorDetails.class);
         configuration.addAnnotatedClass(Course.class);
+        configuration.addAnnotatedClass(Review.class);
     }
 
     @Override
