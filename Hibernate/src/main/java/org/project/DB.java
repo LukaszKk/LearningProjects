@@ -12,7 +12,7 @@ public class DB {
 
     public static void saveObject(Object object) {
         try (MysqlConnector connector = MysqlConnector.open()) {
-            Session session = connector.session();
+            Session session = connector.currentSession();
 
             logger.info("Saving object: " + object);
 
@@ -20,12 +20,11 @@ public class DB {
             session.saveOrUpdate(object);
             session.getTransaction().commit();
         }
-
     }
 
     public static <T> T readObject(int id, Class<T> type) {
         try (MysqlConnector connector = MysqlConnector.open()) {
-            Session session = connector.session();
+            Session session = connector.currentSession();
 
             logger.info("Reading object");
 
@@ -41,7 +40,7 @@ public class DB {
     public static <T> List<T> readObjectsWhere(String tableName, String conditionColumnName, String condition,
                                                String conditionValue) {
         try (MysqlConnector connector = MysqlConnector.open()) {
-            Session session = connector.session();
+            Session session = connector.currentSession();
 
             logger.info("Reading objects");
 
@@ -54,6 +53,18 @@ public class DB {
             session.getTransaction().commit();
 
             return objects;
+        }
+    }
+
+    public static void removeObject(Object object) {
+        try (MysqlConnector connector = MysqlConnector.open()) {
+            Session session = connector.currentSession();
+
+            logger.info("Removing object: " + object);
+
+            session.beginTransaction();
+            session.delete(object);
+            session.getTransaction().commit();
         }
     }
 }

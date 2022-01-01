@@ -40,7 +40,7 @@ public class MysqlConnector implements AutoCloseable {
         return new MysqlConnector();
     }
 
-    public Session session() {
+    public Session currentSession() {
         if (session == null || !session.isOpen()) {
             var configuration = configure();
             sessionFactory = configuration.buildSessionFactory(new StandardServiceRegistryBuilder()

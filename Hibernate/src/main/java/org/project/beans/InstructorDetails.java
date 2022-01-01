@@ -1,10 +1,12 @@
 package org.project.beans;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -21,6 +23,9 @@ public class InstructorDetails {
 
     @Column
     private String hobby;
+
+    @OneToOne(mappedBy = "instructorDetails", cascade = CascadeType.ALL)
+    private Instructor instructor;
 
     public InstructorDetails() {
 
@@ -53,6 +58,14 @@ public class InstructorDetails {
 
     public void setHobby(String hobby) {
         this.hobby = hobby;
+    }
+
+    public Instructor getInstructor() {
+        return instructor;
+    }
+
+    public void setInstructor(Instructor instructor) {
+        this.instructor = instructor;
     }
 
     @Override

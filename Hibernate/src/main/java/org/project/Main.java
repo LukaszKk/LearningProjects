@@ -29,5 +29,8 @@ public class Main {
         var readInstructorDetails = DB.readObject(instructorDetails.getId(), InstructorDetails.class);
         System.out.println(readInstructor);
         System.out.println(readInstructorDetails);
+        System.out.println(readInstructorDetails.getInstructor());
+
+        DB.removeObject(readInstructor);
     }
 }
