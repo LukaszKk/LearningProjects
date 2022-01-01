@@ -3,12 +3,25 @@ package org.project;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.hibernate.Session;
+import org.hibernate.query.Query;
 
 import java.util.List;
 
 public class DB {
 
     private static final Logger logger = LogManager.getLogger(DB.class);
+
+    public static <T> T executeQuery(String query, Class<T> resultType) {
+        try (MysqlConnector connector = MysqlConnector.open()) {
+            Session session = connector.currentSession();
+
+            session.beginTransaction();
+            Query<T> queryToExecute = session.createQuery(query, resultType);
+            T result = queryToExecute.getSingleResult();
+            session.getTransaction().commit();
+            return result;
+        }
+    }
 
     public static void saveObject(Object object) {
         try (MysqlConnector connector = MysqlConnector.open()) {

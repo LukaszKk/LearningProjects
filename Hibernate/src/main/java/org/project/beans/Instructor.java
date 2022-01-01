@@ -3,12 +3,16 @@ package org.project.beans;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table
@@ -26,8 +30,14 @@ public class Instructor {
     private String email;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "instructorDetailId")
+    @JoinColumn
     private InstructorDetails instructorDetails;
+
+    @OneToMany(fetch = FetchType.EAGER,
+            mappedBy = "instructor",
+            cascade = {CascadeType.DETACH, CascadeType.MERGE,
+                    CascadeType.REFRESH, CascadeType.PERSIST})
+    private List<Course> courses;
 
     public Instructor() {
 
@@ -70,13 +80,29 @@ public class Instructor {
         this.instructorDetails = instructorDetails;
     }
 
+    public List<Course> getCourses() {
+        return courses;
+    }
+
+    public void setCourses(List<Course> courses) {
+        this.courses = courses;
+    }
+
+    public void add(Course course) {
+        if (courses == null) {
+            courses = new ArrayList<>();
+        }
+
+        courses.add(course);
+        course.setInstructor(this);
+    }
+
     @Override
     public String toString() {
         return "Instructor{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", email='" + email + '\'' +
-                ", instructorDetails=" + instructorDetails +
                 '}';
     }
 }

@@ -9,6 +9,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.cfg.Environment;
+import org.project.beans.Course;
 import org.project.beans.Instructor;
 import org.project.beans.InstructorDetails;
 import org.project.beans.Student;
@@ -63,11 +64,16 @@ public class MysqlConnector implements AutoCloseable {
         properties.setProperty("hibernate.hbm2ddl.auto", "update");
 
         var configuration = new Configuration().addProperties(properties);
+        mapClasses(configuration);
+
+        return configuration;
+    }
+
+    private static void mapClasses(Configuration configuration) {
         configuration.addAnnotatedClass(Student.class);
         configuration.addAnnotatedClass(Instructor.class);
         configuration.addAnnotatedClass(InstructorDetails.class);
-
-        return configuration;
+        configuration.addAnnotatedClass(Course.class);
     }
 
     @Override
