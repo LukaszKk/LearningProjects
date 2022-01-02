@@ -3,6 +3,7 @@ include 'ProjectSpring'
 include 'SpringMVC'
 include 'SpringMVCBasics'
 include 'Hibernate'
+include 'AspectOrientedProgramming'
 
 rootProject.name = 'LearningProjects'
 
