@@ -6,6 +6,7 @@ import org.project.beans.Instructor;
 import org.project.beans.InstructorDetails;
 import org.project.beans.Review;
 import org.project.beans.Student;
+import org.project.db.DB;
 
 public class Main {
 
@@ -13,11 +14,13 @@ public class Main {
         // enable log4j2
         PluginManager.addPackage("org.project");
 
-        // save and read basic objects
-        var student = new Student("John");
-        DB.saveObject(student);
+        DB.open();
 
-        var johnObject = DB.readObject(student.getId(), Student.class);
+        // save and read basic objects
+        var student1 = new Student("John");
+        DB.saveObject(student1);
+
+        var johnObject = DB.readObject(student1.getId(), Student.class);
         System.out.println(johnObject);
 
         var johnsList = DB.readObjectsWhere(Student.class.getName(), "name", "=", "John");
@@ -70,5 +73,19 @@ public class Main {
         System.out.println(readCourse3.getReviews());
 
         DB.removeObject(readCourse3);
+
+        // ManyToMany
+        System.out.println("ManyToMany");
+
+        Course course4 = new Course("Course 4");
+        DB.saveObject(course4);
+        Student student2 = new Student("ASsad");
+        Student student3 = new Student("ASsad");
+        course4.add(student2);
+        course4.add(student3);
+        DB.saveObject(student2);
+        DB.saveObject(student3);
+
+        DB.shutdown();
     }
 }

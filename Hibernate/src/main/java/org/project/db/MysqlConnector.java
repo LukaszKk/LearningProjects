@@ -1,4 +1,4 @@
-package org.project;
+package org.project.db;
 
 import com.mysql.cj.jdbc.MysqlDataSource;
 import org.apache.logging.log4j.LogManager;
@@ -28,14 +28,21 @@ public class MysqlConnector implements AutoCloseable {
     private static final String DB_PASSWORD = "lIS0ib7b320=";
     private static final String DB_NAME = "myhibernate";
     private static SessionFactory sessionFactory;
-    private static Session session;
-    private final MysqlDataSource dataSource;
+    private Session session;
 
     private MysqlConnector() {
-        dataSource = new MysqlDataSource();
+        var dataSource = new MysqlDataSource();
         dataSource.setUser(DB_USER);
         dataSource.setPassword(decrypt(DB_PASSWORD));
         dataSource.setDatabaseName(DB_NAME);
+
+        if (sessionFactory == null) {
+            var configuration = configure();
+            sessionFactory = configuration.buildSessionFactory(new StandardServiceRegistryBuilder()
+                    .applySettings(configuration.getProperties())
+                    .applySetting(Environment.DATASOURCE, dataSource)
+                    .build());
+        }
     }
 
     public static MysqlConnector open() {
@@ -44,11 +51,6 @@ public class MysqlConnector implements AutoCloseable {
 
     public Session currentSession() {
         if (session == null || !session.isOpen()) {
-            var configuration = configure();
-            sessionFactory = configuration.buildSessionFactory(new StandardServiceRegistryBuilder()
-                    .applySettings(configuration.getProperties())
-                    .applySetting(Environment.DATASOURCE, dataSource)
-                    .build());
             session = sessionFactory.getCurrentSession();
         }
         return session;
@@ -57,14 +59,12 @@ public class MysqlConnector implements AutoCloseable {
     private static Configuration configure() {
         var properties = new Properties();
         properties.setProperty("hibernate.connection.url", "jdbc:mysql://localhost:3306/" + DB_NAME);
-        properties.setProperty("dialect", "org.hibernate.dialect.MySQLDialect");
+        properties.setProperty("dialect", "org.hibernate.dialect.MySQL5Dialect");
         properties.setProperty("hibernate.connection.username", "root");
         properties.setProperty("hibernate.connection.password", "root");
         properties.setProperty("hibernate.current_session_context_class",
                 "org.hibernate.context.internal.ThreadLocalSessionContext");
-        properties.setProperty("hibernate.hbm2ddl.auto", "update");
-        // drop db on startup
-        // properties.setProperty("hibernate.hbm2ddl.auto", "create-drop");
+        properties.setProperty("hibernate.hbm2ddl.auto", "create");
 
         var configuration = new Configuration().addProperties(properties);
         mapClasses(configuration);
@@ -84,7 +84,13 @@ public class MysqlConnector implements AutoCloseable {
     public void close() {
         if (session.isOpen()) {
             session.close();
+        }
+    }
+
+    public void shutdown() {
+        if (sessionFactory != null) {
             sessionFactory.close();
+            sessionFactory = null;
         }
     }
 
