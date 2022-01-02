@@ -39,19 +39,6 @@ public class DB {
         session.getTransaction().commit();
     }
 
-    /**
-     * Saves lazy object and allows to do action on another
-     */
-    public static void saveLazyObject(Object object) {
-        Session session = open().currentSession();
-
-        logger.info("Saving object: " + object);
-
-        session.beginTransaction();
-        session.saveOrUpdate(object);
-        session.getTransaction().commit();
-    }
-
     public static <T> T readObject(int id, Class<T> type) {
         Session session = open().currentSession();
 
