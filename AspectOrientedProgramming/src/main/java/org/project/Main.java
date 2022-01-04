@@ -22,6 +22,11 @@ public class Main {
         account.addAccount();
         membershipManager.addMember();
 
+        account.setName("asdasd");
+        account.setCode("12312312");
+        String name = account.getName();
+        String code = account.getCode();
+
         context.close();
     }
 }
