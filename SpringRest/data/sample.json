@@ -1,5 +1,12 @@
 {
   "id": 215,
   "name": "Student01",
-  "active": false
+  "active": false,
+  "address": {
+    "city": "Wroclaw",
+    "zip": "33-333",
+    "country": "Poland"
+  },
+  "languages": ["Java", "Javascript", "Python"],
+  "credit_card_number": 12334412
 }

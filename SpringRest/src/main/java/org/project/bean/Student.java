@@ -1,10 +1,17 @@
 package org.project.bean;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import java.util.Arrays;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Student {
 
     private int id;
     private String name;
     private boolean active;
+    private Address address;
+    private String[] languages;
 
     public Student() {
 
@@ -34,12 +41,30 @@ public class Student {
         this.active = active;
     }
 
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
+    }
+
+    public String[] getLanguages() {
+        return languages;
+    }
+
+    public void setLanguages(String[] languages) {
+        this.languages = languages;
+    }
+
     @Override
     public String toString() {
         return "Student{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", active=" + active +
+                ", address=" + address +
+                ", languages=" + Arrays.toString(languages) +
                 '}';
     }
 }
