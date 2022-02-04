@@ -38,13 +38,3 @@ subprojects {
 
     // TODO: Configure spotbugs
 }
-
-wrapper {
-    gradleVersion = 7.1
-}
-
-task run() {
-    dependsOn ':ProjectJUnit:runJUnit'
-    dependsOn ':ProjectSpring:runSpring'
-}
-
