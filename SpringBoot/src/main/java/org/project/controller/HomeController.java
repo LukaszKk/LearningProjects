@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.time.LocalDateTime;
 
 @RestController
-public class ApiController {
+public class HomeController {
 
     @Value("${info.app.name}")
     private String appName;
